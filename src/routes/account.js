@@ -1,8 +1,7 @@
 'use strict';
 const express = require('express');
-const path = require('node:path');
 const { requireAuth } = require('../middleware/auth');
-const { upload, saveImage, removeImage, uploadDir } = require('../services/uploads');
+const { upload, saveImage, removeImage, sendImage } = require('../services/uploads');
 const { httpError } = require('../utils/validation');
 
 function accountRoutes(store) {
@@ -47,7 +46,7 @@ function accountRoutes(store) {
     }
     res.set('Cache-Control', 'private, no-store');
     res.set('Content-Disposition', 'inline; filename="profile-photo.webp"');
-    res.type('image/webp').sendFile(path.join(uploadDir, filename));
+    await sendImage(res, filename);
   });
   return router;
 }

@@ -1,10 +1,9 @@
 'use strict';
 const express = require('express');
-const path = require('node:path');
 const { requireAuth, requireStudent, requireAdmin } = require('../middleware/auth');
 const { TYPES, STATUSES } = require('../utils/constants');
 const { text, id, bounded, httpError } = require('../utils/validation');
-const { upload, saveImage, removeImage, uploadDir } = require('../services/uploads');
+const { upload, saveImage, removeImage, sendImage } = require('../services/uploads');
 const { askProfessor } = require('../services/professor');
 const { templatesFor, validateUpdate, METHODS } = require('../services/responseTemplates');
 const { REPORT_REASONS } = require('../models/comment-moderation');
@@ -84,7 +83,7 @@ function pagesRoutes(store, config, professorLimiter, emailOutbox, supportStore=
     if (!filename || !/^[a-f0-9-]+\.webp$/.test(filename)) throw httpError(404,'Attachment was not found.');
     res.set('Cache-Control','private, no-store');
     res.set('Content-Disposition','inline; filename="feedback-image.webp"');
-    res.type('image/webp').sendFile(path.join(uploadDir, filename));
+    await sendImage(res, filename);
   });
   router.get('/community', requireAuth, async (req,res) => {
     const sort = communitySort(req);

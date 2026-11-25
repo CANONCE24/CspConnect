@@ -11,6 +11,7 @@
     "dev": "nodemon src/server.js",
     "db:start": "node scripts/start-local-db.js",
     "db:setup": "node scripts/setup-db.js",
+    "db:setup-hosted": "node scripts/setup-hosted-db.js",
     "db:migrate-auth": "node scripts/migrate-auth.js",
     "admin:provision": "node scripts/provision-admin.js",
     "test": "node --test tests/*.test.js",

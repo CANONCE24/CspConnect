@@ -18,6 +18,8 @@ function createApp(options = {}) {
   const supportStore = store.supportForConfig ? store.supportForConfig(config) : store;
   const sessionStore = options.sessionStore || new (require('./services/session-store').MySQLSessionStore)(require('./config/db').pool);
   const app = express();
+  // Render terminates HTTPS before forwarding requests to Express.
+  if (config.nodeEnv === 'production') app.set('trust proxy', 1);
   app.disable('x-powered-by'); app.set('view engine','ejs'); app.set('views',path.resolve(__dirname,'../views'));
   app.locals.assetVersion = Date.now().toString(36);
   app.use(helmet({
