@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.*
+!.env.example
+public/uploads/*
+!public/uploads/.gitkeep
+*.log
+coverage/
+test-results/
+.local/
+.mysql-recovery-path

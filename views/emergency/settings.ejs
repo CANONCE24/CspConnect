@@ -1,0 +1,8 @@
+<%- include('../partials/head') %>
+<header class="page-header emergency-page-header"><div><span class="eyebrow">ADMINISTRATION</span><h1>Emergency Settings</h1><p>Manage guardhouse contact and response alerts.</p></div></header>
+<section class="section emergency-form emergency-settings-form"><form method="post" action="/admin/emergency-settings"><input type="hidden" name="_csrf" value="<%= csrfToken %>">
+<div class="field"><label for="guardhouse_number">Guardhouse number</label><input type="tel" id="guardhouse_number" name="guardhouse_number" maxlength="25" value="<%= settings.guardhouse_number %>"><p class="field-help">Leave blank to disable calling.</p></div>
+<div class="checkbox-field"><input type="checkbox" id="number_verified" name="number_verified" value="1"<%= settings.number_verified ? ' checked' : '' %>><label for="number_verified">Number confirmed with CSPC</label></div>
+<div class="field"><label for="escalation_minutes">Escalate unanswered reports after (minutes)</label><input type="number" id="escalation_minutes" name="escalation_minutes" min="1" max="120" required value="<%= settings.escalation_minutes %>"><p class="field-help">Overdue reports receive a stronger alert.</p></div>
+<button class="button button-primary">Save settings</button></form></section>
+<%- include('../partials/footer') %>

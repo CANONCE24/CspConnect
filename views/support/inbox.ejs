@@ -1,0 +1,4 @@
+<%- include('../partials/head') %>
+<header class="page-header"><div><span class="eyebrow">ADMINISTRATION</span><h1>Contact Messages</h1><p>Review private support tickets, reply to users, and manage their concerns.</p></div></header>
+<section class="section flush"><%- include('filters',{action:'/admin/contact',admin:true}) %><%- include('tickets',{basePath:'/admin/contact',admin:true}) %></section>
+<%- include('../partials/footer') %>

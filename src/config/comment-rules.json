@@ -1,0 +1,10 @@
+{
+  "profanity": ["fuck", "fucking", "fucker", "shit", "bullshit", "bitch", "asshole", "cunt", "puta", "putangina", "putang ina", "potangina", "tangina", "tang ina", "pakyu", "pak yu", "gago", "gaga", "bobo", "tanga", "ulol", "tarantado", "punyeta", "pucha", "kantot", "burat"],
+  "harassment": ["kill yourself", "you are worthless", "nobody wants you", "sana mamatay ka", "magpakamatay ka", "wala kang silbi"],
+  "hate": ["nigger", "faggot", "women are inferior", "all muslims should die", "kill all christians", "persons with disabilities are useless"],
+  "spam": ["earn money fast", "click here to win", "guaranteed profit", "free crypto"],
+  "reviewDomains": ["bit.ly", "tinyurl.com", "t.co", "is.gd", "cutt.ly"],
+  "reviewTlds": ["zip", "mov", "click", "top", "xyz"],
+  "repeatWindowMinutes": 15,
+  "maximumLinks": 3
+}

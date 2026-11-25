@@ -1,0 +1,8 @@
+<section class="support-email<%= typeof compact!=='undefined'&&compact?' support-email-compact':'' %>" aria-label="Alternative contact method">
+  <h2>Alternative Contact Method</h2>
+  <p>Having trouble accessing CSPConnect or prefer contacting us directly? You may reach the administrator through email.</p>
+  <p>Email: <a href="<%= contactMailto %>"><%= contactEmail %></a></p>
+  <div class="support-actions"><a class="button button-secondary" href="<%= contactMailto %>">Email Administrator</a><button class="button button-secondary" type="button" data-copy-support-email="<%= contactEmail %>">Copy email</button></div>
+  <p class="field-help" data-copy-support-status role="status"></p>
+  <p class="field-help">Direct email opens your email application. It is separate from CSPConnect support tickets and does not create a conversation here.</p>
+</section>

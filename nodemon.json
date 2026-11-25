@@ -1,0 +1,7 @@
+{
+  "watch": ["src", "views", "public/css", "public/js", ".env"],
+  "ext": "js,ejs,css,json,env",
+  "ignore": ["public/uploads/**", "docs/qa/**", "tests/**"],
+  "delay": 300,
+  "signal": "SIGTERM"
+}

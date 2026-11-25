@@ -1,0 +1,30 @@
+<%- include('../partials/head',{publicPage:true,flash:null}) %>
+<div class="auth-layout connect-auth">
+  <%- include('../partials/auth-intro',{creating:false}) %>
+  <section class="connect-auth-form" aria-labelledby="reset-heading">
+    <div class="login-panel">
+      <h2 id="reset-heading"><%= purpose==='reset'?'Reset your password':'Verify your email and choose a password' %></h2>
+      <p>Choose a new password for your account. Saving it will sign out your existing sessions.</p>
+      <% if(message) { %><div class="notice notice-error" role="alert"><%= message %></div><% } %>
+      <form class="password-form" method="post" action="/auth/<%= purpose==='reset'?'reset-password':'verify-email' %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="token" value="<%= token %>">
+        <div class="field">
+          <label for="password">New password</label>
+          <input id="password" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" aria-describedby="reset-password-help" required>
+          <p id="reset-password-help" class="field-help">Use at least 12 characters. Choose a password you haven't used elsewhere.</p>
+        </div>
+        <div class="field">
+          <label for="confirm">Confirm password</label>
+          <input id="confirm" name="passwordConfirmation" type="password" minlength="12" maxlength="72" autocomplete="new-password" required>
+        </div>
+        <button class="button button-primary button-full signin-button" type="submit">Save password</button>
+      </form>
+      <nav class="auth-help-links" aria-label="Password reset help">
+        <a href="/forgot-password">Request a new reset link</a>
+        <a href="/login">Back to sign in</a>
+      </nav>
+    </div>
+  </section>
+</div>
+<%- include('../partials/footer',{publicPage:true}) %>

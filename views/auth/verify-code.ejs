@@ -1,0 +1,32 @@
+<%- include('../partials/head',{publicPage:true,flash:null}) %>
+<div class="auth-layout connect-auth">
+  <%- include('../partials/auth-intro',{creating:false}) %>
+  <section class="connect-auth-form" aria-labelledby="verification-heading">
+    <div class="login-panel verification-panel">
+      <h2 id="verification-heading">Verify your email</h2>
+      <p id="verification-instructions">Enter the 6-digit code sent to <strong class="verification-email"><%= email %></strong>. It expires after 5 minutes.</p>
+      <% if(message) { %><div class="notice<%= hasError?' notice-error':' notice-success' %>" role="<%= hasError?'alert':'status' %>"><%= message %></div><% } %>
+      <form class="password-form" method="post" action="/auth/verify-email">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="field">
+          <label for="verification-code">Verification code</label>
+          <input class="verification-code-input" id="verification-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required autofocus aria-describedby="verification-instructions attempts">
+          <p id="attempts" class="field-help"><%= remaining %> attempts remaining.</p>
+        </div>
+        <button class="button button-primary button-full signin-button" type="submit">Verify email</button>
+      </form>
+      <form class="verification-resend" method="post" action="/auth/resend-verification">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <p class="field-help" id="resend-status" data-resend-status><%= resendSeconds>0?'You can resend in '+resendSeconds+' seconds.':'You can request a new code.' %></p>
+        <button class="button button-secondary button-full" type="submit" data-resend-code data-resend-seconds="<%= resendSeconds %>" aria-describedby="resend-status"<%= resendSeconds>0?' disabled':'' %>>Resend code</button>
+      </form>
+      <noscript><p class="field-help">Refresh this page after the cooldown to resend.</p></noscript>
+      <nav class="auth-help-links" aria-label="Email verification help">
+        <a href="/signup">Use a different email</a>
+        <a href="/login">Back to sign in</a>
+      </nav>
+    </div>
+  </section>
+</div>
+<script src="/js/verification.js" defer></script>
+<%- include('../partials/footer',{publicPage:true}) %>

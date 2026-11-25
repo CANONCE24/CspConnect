@@ -1,0 +1,9 @@
+  <footer class="page-footer"><span>Camarines Sur Polytechnic Colleges</span><span>CSPConnect · Your campus, connected.</span></footer>
+</main>
+<% if (user && !(typeof publicPage !== 'undefined' && publicPage)) { %></div></div><% } %>
+<% if (user?.role === 'security' && !(typeof publicPage !== 'undefined' && publicPage)) { %>
+<%- include('../emergency/alarm') %>
+<script src="/socket.io/socket.io.js" defer></script><script src="/js/emergency.js?v=<%= assetVersion %>" defer></script>
+<% } %>
+</body>
+</html>

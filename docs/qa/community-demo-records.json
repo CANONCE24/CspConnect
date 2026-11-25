@@ -1,0 +1,108 @@
+{
+  "purpose": "Fictional presentation discussions and interactions; all new profiles are labeled Demo.",
+  "database": "cspc_feedback_db",
+  "users": [
+    {
+      "id": 3,
+      "name": "Mika Reyes (Demo)",
+      "email": "mika.reyes@community-demo.invalid"
+    },
+    {
+      "id": 4,
+      "name": "Adrian Santos (Demo)",
+      "email": "adrian.santos@community-demo.invalid"
+    },
+    {
+      "id": 5,
+      "name": "Bea Mendoza (Demo)",
+      "email": "bea.mendoza@community-demo.invalid"
+    },
+    {
+      "id": 6,
+      "name": "Carlo Rivera (Demo)",
+      "email": "carlo.rivera@community-demo.invalid"
+    },
+    {
+      "id": 7,
+      "name": "Janelle Cruz (Demo)",
+      "email": "janelle.cruz@community-demo.invalid"
+    },
+    {
+      "id": 8,
+      "name": "Paolo Garcia (Demo)",
+      "email": "paolo.garcia@community-demo.invalid"
+    },
+    {
+      "id": 9,
+      "name": "Rina Flores (Demo)",
+      "email": "rina.flores@community-demo.invalid"
+    },
+    {
+      "id": 10,
+      "name": "Luis Navarro (Demo)",
+      "email": "luis.navarro@community-demo.invalid"
+    },
+    {
+      "id": 11,
+      "name": "Community Moderator (Demo)",
+      "email": "community.moderator@community-demo.invalid"
+    }
+  ],
+  "posts": [
+    {
+      "id": 6,
+      "reference": "FB-2026-00006",
+      "title": "A quiet study zone and a separate space for group work",
+      "status": "Under Review",
+      "support": 8,
+      "notHelpful": 0,
+      "comments": 6
+    },
+    {
+      "id": 7,
+      "reference": "FB-2026-00007",
+      "title": "Could campus Wi-Fi have clearer login and connection guidance?",
+      "status": "In Progress",
+      "support": 7,
+      "notHelpful": 0,
+      "comments": 6
+    },
+    {
+      "id": 8,
+      "reference": "FB-2026-00008",
+      "title": "Show document requirements before students join a service queue",
+      "status": "Under Review",
+      "support": 6,
+      "notHelpful": 1,
+      "comments": 5
+    },
+    {
+      "id": 9,
+      "reference": "FB-2026-00009",
+      "title": "A simple way to report walkway lighting and access concerns",
+      "status": "Submitted",
+      "support": 5,
+      "notHelpful": 0,
+      "comments": 4
+    },
+    {
+      "id": 10,
+      "reference": "FB-2026-00010",
+      "title": "Waste segregation labels should show examples, not just colors",
+      "status": "Submitted",
+      "support": 4,
+      "notHelpful": 2,
+      "comments": 5
+    },
+    {
+      "id": 11,
+      "reference": "FB-2026-00011",
+      "title": "Short research guides make it easier to get started",
+      "status": "Resolved",
+      "support": 7,
+      "notHelpful": 0,
+      "comments": 4
+    }
+  ],
+  "createdAt": "2026-10-16T11:50:29.305Z"
+}

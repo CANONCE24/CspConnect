@@ -1,0 +1,23 @@
+<%- include('../partials/head') %>
+<div class="community-detail"><a class="back-link" href="/community">Back to Community Feed</a><header class="page-header community-detail-header"><div><span class="eyebrow">CSPC COMMUNITY</span><h1><%= feedback.title %></h1><div class="entry-meta"><span class="type-label type-label--<%= feedback.type.toLowerCase().replace(/[^a-z0-9]+/g, '-') %>"><%= feedback.type %></span><span><%= feedback.category_name || 'Uncategorized' %></span><span>Published <%= formatDate(feedback.published_at) %></span><span>By <%= feedback.is_anonymous ? 'Anonymous' : (feedback.author_name || 'Student') %></span></div></div><%- include('../partials/status',{status:feedback.status}) %></header>
+<section class="section"><h2>Feedback</h2><p class="multiline feed-description"><%= feedback.description %></p><% if (feedback.attachment_url) { %><a class="attachment-link" href="<%= feedback.attachment_url %>" target="_blank" rel="noopener"><img class="attachment-image" src="<%= feedback.attachment_url %>" alt="Image attached to published feedback" loading="lazy"><span>Open attached image</span></a><% } %><div class="reaction-bar"><%- include('../partials/reactions',{post:feedback,selected:reaction}) %></div><p class="reaction-note">Each student can keep one active reaction. Click it again to remove it, or select the other reaction to switch.</p></section>
+<section class="section" id="discussion">
+  <div class="section-heading"><h2>Community discussion</h2><% if(user.role==='admin'){ %><a class="text-link" href="/admin/comments">Moderate comments</a><% } %></div>
+  <% if(comments.length){ %><div class="comment-list"><% comments.forEach(comment=>{ %><article class="comment">
+    <div class="response-meta"><strong><%= comment.author_name || 'Student' %></strong><span><%= formatDate(comment.created_at) %></span></div><p class="multiline"><%= comment.body %></p>
+    <% if(user.role==='student'&&comment.is_owner){ %><%- include('../partials/comment-edit',{comment}) %><% } %>
+    <% if(user.role==='student'&&!comment.is_owner){ %>
+      <% if(comment.reported_by_me){ %><span class="comment-reported">Reported for review</span><% }else{ %><details class="comment-report"><summary>Report comment</summary>
+        <form method="post" action="/community/<%= feedback.id %>/comments/<%= comment.id %>/report">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="field"><label for="report-reason-<%= comment.id %>">Report reason</label><select id="report-reason-<%= comment.id %>" name="reason" required><option value="">Choose a reason</option><% Object.entries(reportReasons).forEach(([value,label])=>{ %><option value="<%= value %>"><%= label %></option><% }); %></select></div>
+          <div class="field"><label for="report-details-<%= comment.id %>">Details (optional)</label><textarea id="report-details-<%= comment.id %>" name="details" rows="2" maxlength="300"></textarea></div>
+          <p class="field-help">An administrator will review the report. Reporting does not automatically hide a comment.</p><button class="button button-secondary button-small" type="submit">Submit report</button>
+        </form>
+      </details><% } %>
+    <% } %>
+  </article><% }); %></div><% }else{ %><div class="empty-state"><h3>No comments yet.</h3><p>Start a respectful conversation about this feedback.</p></div><% } %>
+  <% if(user.role==='student'&&pendingComments.length){ %><div class="own-pending-comments"><h3>Your comments awaiting review</h3><p class="field-help">These comments are visible only to you here and to administrators in the review queue.</p><% pendingComments.forEach(comment=>{ %><article class="comment"><span class="moderation-badge moderation-badge-pending">Pending moderation</span><p class="multiline"><%= comment.body %></p><%- include('../partials/comment-edit',{comment}) %></article><% }); %></div><% } %>
+  <% if(user.role==='student'){ %><form class="discussion-form" method="post" action="/community/<%= feedback.id %>/comments"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="request_key" value="<%= newActionKey() %>"><div class="field"><label for="comment-body">Add a comment</label><textarea id="comment-body" name="body" rows="4" maxlength="500" required placeholder="Share a constructive thought about this feedback."></textarea><div class="field-meta"><span class="field-help">Keep your comment respectful and relevant.</span><span class="field-help" data-count-for="comment-body">0 / 500</span></div></div><button class="button button-primary" type="submit">Post comment</button></form><% } %>
+</section></div>
+<%- include('../partials/footer') %>

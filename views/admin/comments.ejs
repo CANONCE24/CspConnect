@@ -1,0 +1,39 @@
+<%- include('../partials/head') %>
+<header class="page-header"><div><span class="eyebrow">ADMINISTRATION</span><h1>Comment Moderation</h1><p>Review flagged and reported comments. Filter signals help prioritize review; administrators make the final decision.</p></div></header>
+<nav class="moderation-tabs" aria-label="Comment moderation views">
+  <% [['all','All Comments'],['flagged','Flagged Comments'],['hidden','Hidden Comments']].forEach(([value,label]) => { const params = new URLSearchParams({view:value}); if(query.q)params.set('q',query.q); %>
+    <a href="?<%= params %>"<% if(query.view===value){ %> aria-current="page"<% } %>><%= label %><% if(value==='flagged'){ %><span class="moderation-count"><%= Number(result.pendingCount || 0) %></span><% } %></a>
+  <% }); %>
+</nav>
+<section class="section flush">
+  <form class="filter-bar" action="/admin/comments" method="get">
+    <input type="hidden" name="view" value="<%= query.view %>">
+    <div class="field filter-search"><label for="comment-q">Search comments</label><input id="comment-q" name="q" type="search" maxlength="150" placeholder="Search comment, discussion, or reference" value="<%= query.q || '' %>"></div>
+    <div class="filter-actions"><button class="button button-primary" type="submit">Apply filters</button><a class="text-link" href="/admin/comments?view=<%= query.view %>">Reset</a></div>
+  </form>
+  <% if(result.items.length){ %><div class="table-scroll"><table class="comment-moderation-table">
+    <thead><tr><th scope="col">Comment / review signals</th><th scope="col">Discussion / author</th><th scope="col">Posted</th><th scope="col">Status</th><th scope="col">Decision</th></tr></thead>
+    <tbody><% result.items.forEach(comment => { const state=comment.state || (comment.is_hidden?'Removed':'Published'); const reported=Number(comment.report_count || 0)>0; %><tr>
+      <td class="comment-body-cell"><p class="multiline"><%= comment.body %></p>
+        <% if((comment.reasons || []).length){ %><ul class="comment-signals"><% comment.reasons.forEach(reason=>{ %><li><%= reason %></li><% }); %></ul><% } %>
+        <% (comment.reports || []).forEach(report=>{ %><p class="comment-report-reason"><strong>Student report:</strong> <%= reportReasons[report.reason] %><% if(report.details){ %> ? <%= report.details %><% } %></p><% }); %>
+        <% if((comment.history || []).length){ %><details class="comment-audit"><summary>Recent comment history</summary><ol><% comment.history.forEach(entry=>{ %><li><strong><%= entry.action %></strong> ? <%= entry.actor_name %> ? Version <%= entry.version %><br><time><%= formatDate(entry.created_at) %></time><% if(entry.note){ %><p><%= entry.note %></p><% } %><details><summary>Recorded text</summary><p class="multiline"><%= entry.body_snapshot %></p></details></li><% }); %></ol></details><% } %>
+      </td>
+      <td><a class="table-title" href="<%= Number(comment.is_published)===1?'/community/':'/admin/feedback/' %><%= comment.feedback_id %>"><%= comment.feedback_title || 'View feedback' %></a><span class="table-sub"><%= comment.author_name || 'Student' %></span></td>
+      <td class="date-cell"><%= formatDate(comment.created_at) %></td>
+      <td><span class="moderation-badge moderation-badge-<%= state.toLowerCase() %>"><%= state==='Pending'?'Pending review':state %></span><% if(reported){ %><span class="table-sub">Reported ? <%= Number(comment.report_count) %></span><% } %><span class="table-sub"><%= comment.is_hidden?'Hidden from students':'Publicly visible' %></span></td>
+      <td><form class="comment-decision" method="post" action="/admin/comments/<%= comment.id %>/moderate" data-comment-decision>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="version" value="<%= comment.version || 1 %>"><input type="hidden" name="request_key" value="<%= newActionKey() %>"><input type="hidden" name="view" value="<%= query.view %>"><input type="hidden" name="q" value="<%= query.q || '' %>">
+        <label class="sr-only" for="decision-note-<%= comment.id %>">Decision note</label><input id="decision-note-<%= comment.id %>" type="text" name="note" maxlength="300" placeholder="Decision note (optional)">
+        <div class="comment-decision-buttons">
+          <% if(state==='Removed'){ %><button class="button button-secondary button-small" name="action" value="restore" type="submit">Restore</button>
+          <% }else{ %><% if(state==='Pending'||reported){ %><button class="button button-primary button-small" name="action" value="approve" type="submit">Approve</button><% } %><button class="button button-secondary button-small" name="action" value="remove" type="submit"><%= state==='Pending'||reported?'Remove':'Hide' %></button><% } %>
+        </div>
+        <noscript><label><input type="checkbox" name="confirmed" value="1">Confirm removal if using Hide or Remove.</label></noscript>
+      </form></td>
+    </tr><% }); %></tbody>
+  </table></div><% }else{ %><div class="empty-state"><h3><%= query.q?'No comments match your search.':query.view==='flagged'?'No comments pending review.':query.view==='hidden'?'No hidden comments.':'No comments to display.' %></h3><p>New flags and student reports will appear here for administrator review.</p></div><% } %>
+  <%- include('../partials/pagination') %>
+</section>
+<script src="/js/comment-moderation.js?v=<%= assetVersion %>" defer></script>
+<%- include('../partials/footer') %>

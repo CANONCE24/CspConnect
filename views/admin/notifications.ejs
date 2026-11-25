@@ -1,0 +1,7 @@
+<%- include('../partials/head') %>
+<header class="page-header"><div><span class="eyebrow">ADMINISTRATION</span><h1>Email Notifications</h1><p>Automatic feedback updates and email history.</p></div></header>
+<% if (!emailEnabled) { %><div class="notice notice-error" role="status">Email sending is not configured. Notifications will remain queued until SMTP is enabled.</div><% } %>
+<section class="section"><form method="get" action="/admin/notifications" class="email-filter"><label for="email-state">Notification status</label><select id="email-state" name="state"><option value="">All notifications</option><% ['Pending','Processing','Sent','Failed'].forEach(state => { %><option value="<%= state %>"<%= stateFilter === state ? ' selected' : '' %>><%= state === 'Sent' ? 'Accepted by mail server' : state === 'Pending' ? 'Queued' : state === 'Processing' ? 'Sending' : state %></option><% }); %></select><button class="button button-secondary">Filter</button></form>
+<%- include('../partials/email-notifications',{notificationRows:result.items,showFeedback:true}) %>
+<nav class="pagination" aria-label="Notification pages"><% if (result.page>1) { %><a href="?state=<%= encodeURIComponent(stateFilter) %>&page=<%= result.page-1 %>">Previous</a><% } %><span>Page <%= result.page %> of <%= result.pages %></span><% if (result.page<result.pages) { %><a href="?state=<%= encodeURIComponent(stateFilter) %>&page=<%= result.page+1 %>">Next</a><% } %></nav>
+</section><%- include('../partials/footer') %>

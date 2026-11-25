@@ -1,0 +1,64 @@
+{
+  "verifiedAt": "2026-10-20T14:02:54.483Z",
+  "checks": [
+    "/admin rendered successfully",
+    "/admin/analytics rendered successfully",
+    "/admin/feedback rendered successfully",
+    "/admin/feedback/7 rendered successfully",
+    "/community?sort=trending rendered successfully",
+    "/community?sort=most_supported rendered successfully",
+    "/community?sort=newest rendered successfully",
+    "/community/1 rendered successfully",
+    "/community/2 rendered successfully",
+    "/community/3 rendered successfully",
+    "/community/4 rendered successfully",
+    "/community/5 rendered successfully",
+    "/community/6 rendered successfully",
+    "Private concern excluded from community list and detail"
+  ],
+  "totals": {
+    "feedback": 10,
+    "feedback_comments": 30,
+    "feedback_reactions": 40,
+    "feedback_responses": 5,
+    "feedback_status_history": 20,
+    "feedback_email_outbox": 0,
+    "feedback_email_attempts": 0,
+    "feedback_email_retries": 0,
+    "emergency_reports": 0,
+    "emergency_history": 0,
+    "emergency_settings_history": 0
+  },
+  "statuses": [
+    {
+      "status": "Submitted",
+      "total": 4
+    },
+    {
+      "status": "Under Review",
+      "total": 2
+    },
+    {
+      "status": "In Progress",
+      "total": 2
+    },
+    {
+      "status": "Resolved",
+      "total": 1
+    },
+    {
+      "status": "Closed",
+      "total": 1
+    }
+  ],
+  "stats": {
+    "total": 10,
+    "submitted": 4,
+    "underReview": 2,
+    "inProgress": 2,
+    "resolved": 1,
+    "closed": 1,
+    "published": 6,
+    "hiddenComments": 0
+  }
+}

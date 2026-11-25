@@ -1,0 +1,17 @@
+{
+  "ownerId": 1,
+  "records": [
+    {
+      "id": 2,
+      "reference": "FB-2026-00002"
+    },
+    {
+      "id": 3,
+      "reference": "FB-2026-00003"
+    },
+    {
+      "id": 4,
+      "reference": "FB-2026-00004"
+    }
+  ]
+}

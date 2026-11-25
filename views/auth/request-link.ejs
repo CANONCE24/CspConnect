@@ -1,0 +1,23 @@
+<%- include('../partials/head',{publicPage:true,flash:null}) %>
+<div class="auth-layout connect-auth">
+  <%- include('../partials/auth-intro',{creating:false}) %>
+  <section class="connect-auth-form" aria-labelledby="recovery-heading">
+    <div class="login-panel">
+      <h2 id="recovery-heading"><%= title %></h2>
+      <p>Enter your account email. If it is eligible, we will send a single-use reset link that expires in 30 minutes.</p>
+      <% if (flash && flash.message) { %><div class="notice notice-<%= flash.type === 'error' ? 'error' : 'success' %>" role="<%= flash.type === 'error' ? 'alert' : 'status' %>"><%= flash.message %></div><% } %>
+      <form class="password-form" method="post" action="/auth/<%= purpose==='reset'?'forgot-password':'request-verification' %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="you@cspc.edu.ph" required>
+        </div>
+        <button class="button button-primary button-full signin-button" type="submit">Send email</button>
+      </form>
+      <nav class="auth-help-links auth-help-links-centered" aria-label="Account recovery help">
+        <a href="/login">Back to sign in</a>
+      </nav>
+    </div>
+  </section>
+</div>
+<%- include('../partials/footer',{publicPage:true}) %>

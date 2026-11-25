@@ -1,0 +1,4 @@
+<%- include('../partials/head') %>
+<header class="page-header"><div><span class="eyebrow">STUDENT PORTAL</span><h1>My Feedback</h1><p>View your submissions, check their status, and read official responses.</p></div><a class="button button-primary" href="/feedback/new">Submit Feedback</a></header>
+<section class="section flush"><%- include('../partials/filters',{action:'/feedback',showStatus:true,showCategory:true}) %><%- include('../partials/feedback-table',{rows:result.items,basePath:'/feedback',emptyTitle:query.q || query.type || query.status || query.category ? 'No feedback matches your filters.' : 'No feedback yet.',emptyMessage:'Your submitted feedback will appear here. You can submit feedback whenever you have something to share.'}) %><%- include('../partials/pagination') %></section>
+<%- include('../partials/footer') %>

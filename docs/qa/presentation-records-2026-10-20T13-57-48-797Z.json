@@ -1,0 +1,189 @@
+{
+  "purpose": "Fictional presentation records requested for October 21, 2026.",
+  "database": "cspc_feedback_db",
+  "backup": "C:\\Users\\Sam\\Desktop\\CSPConnect\\.local\\backups\\cspc_feedback_db-before-presentation-2026-10-20T13-57-48-380Z.sql",
+  "createdAt": "2026-10-20T13:57:48.680Z",
+  "preservedAccounts": [
+    {
+      "id": 1,
+      "name": "Sam Canonce",
+      "role": "student"
+    },
+    {
+      "id": 2,
+      "name": "CSPC Administrator",
+      "role": "admin"
+    },
+    {
+      "id": 12,
+      "name": "Guard House",
+      "role": "security"
+    }
+  ],
+  "users": [
+    {
+      "id": 13,
+      "name": "LeBron James",
+      "email": "lebron.james@presentation.invalid"
+    },
+    {
+      "id": 14,
+      "name": "Stephen Curry",
+      "email": "stephen.curry@presentation.invalid"
+    },
+    {
+      "id": 15,
+      "name": "Luka Dončić",
+      "email": "luka.doncic@presentation.invalid"
+    },
+    {
+      "id": 16,
+      "name": "Giannis Antetokounmpo",
+      "email": "giannis.antetokounmpo@presentation.invalid"
+    },
+    {
+      "id": 17,
+      "name": "Nikola Jokić",
+      "email": "nikola.jokic@presentation.invalid"
+    },
+    {
+      "id": 18,
+      "name": "Shai Gilgeous-Alexander",
+      "email": "shai.gilgeous-alexander@presentation.invalid"
+    },
+    {
+      "id": 19,
+      "name": "Anthony Edwards",
+      "email": "anthony.edwards@presentation.invalid"
+    },
+    {
+      "id": 20,
+      "name": "Victor Wembanyama",
+      "email": "victor.wembanyama@presentation.invalid"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "reference": "FB-2026-00001",
+      "author": "LeBron James",
+      "title": "A quiet study zone and a separate space for group work",
+      "type": "Suggestion",
+      "status": "Under Review",
+      "published": true,
+      "comments": 6,
+      "support": 8,
+      "notHelpful": 0
+    },
+    {
+      "id": 2,
+      "reference": "FB-2026-00002",
+      "author": "Stephen Curry",
+      "title": "Could campus Wi-Fi have clearer login and connection guidance?",
+      "type": "Concern",
+      "status": "In Progress",
+      "published": true,
+      "comments": 6,
+      "support": 7,
+      "notHelpful": 0
+    },
+    {
+      "id": 3,
+      "reference": "FB-2026-00003",
+      "author": "Luka Dončić",
+      "title": "Show document requirements before students join a service queue",
+      "type": "Suggestion",
+      "status": "Under Review",
+      "published": true,
+      "comments": 5,
+      "support": 6,
+      "notHelpful": 1
+    },
+    {
+      "id": 4,
+      "reference": "FB-2026-00004",
+      "author": "Giannis Antetokounmpo",
+      "title": "A simple way to report walkway lighting and access concerns",
+      "type": "Concern",
+      "status": "Submitted",
+      "published": true,
+      "comments": 4,
+      "support": 5,
+      "notHelpful": 0
+    },
+    {
+      "id": 5,
+      "reference": "FB-2026-00005",
+      "author": "Nikola Jokić",
+      "title": "Waste segregation labels should show examples, not just colors",
+      "type": "Complaint",
+      "status": "Submitted",
+      "published": true,
+      "comments": 5,
+      "support": 4,
+      "notHelpful": 2
+    },
+    {
+      "id": 6,
+      "reference": "FB-2026-00006",
+      "author": "Anthony Edwards",
+      "title": "Short research guides make it easier to get started",
+      "type": "Appreciation",
+      "status": "Resolved",
+      "published": true,
+      "comments": 4,
+      "support": 7,
+      "notHelpful": 0
+    },
+    {
+      "id": 7,
+      "reference": "FB-2026-00007",
+      "author": "Shai Gilgeous-Alexander",
+      "title": "Flickering walkway light near the library entrance",
+      "type": "Concern",
+      "status": "Submitted",
+      "published": false,
+      "comments": 0,
+      "support": 0,
+      "notHelpful": 0
+    },
+    {
+      "id": 8,
+      "reference": "FB-2026-00008",
+      "author": "Nikola Jokić",
+      "title": "Leaking faucet and missing soap in the ground-floor restroom",
+      "type": "Complaint",
+      "status": "In Progress",
+      "published": false,
+      "comments": 0,
+      "support": 0,
+      "notHelpful": 0
+    },
+    {
+      "id": 9,
+      "reference": "FB-2026-00009",
+      "author": "Victor Wembanyama",
+      "title": "Add the registrar checklist beside the existing service window",
+      "type": "Suggestion",
+      "status": "Closed",
+      "published": false,
+      "comments": 0,
+      "support": 0,
+      "notHelpful": 0
+    },
+    {
+      "id": 10,
+      "reference": "FB-2026-00010",
+      "author": "LeBron James",
+      "title": "More time between laboratory sessions would help with equipment checks",
+      "type": "General Feedback",
+      "status": "Submitted",
+      "published": false,
+      "comments": 0,
+      "support": 0,
+      "notHelpful": 0
+    }
+  ],
+  "namesUpdatedAt": "2026-10-20T14:02:53.386Z",
+  "nameTheme": "NBA stars"
+}

@@ -1,0 +1,14 @@
+<%- include('../partials/head') %>
+<header class="page-header emergency-page-header"><div><span class="eyebrow">CAMPUS SECURITY</span><h1>Emergency Dashboard</h1><p>Review incoming reports and coordinate a response.</p></div><span class="emergency-desk-label"><%- include('../partials/icon',{name:'shield'}) %><%= settings.guardhouse_name || 'Guardhouse' %></span></header>
+<div data-emergency-app="security">
+  <div class="emergency-issues"><p data-connection role="status" hidden></p><p data-audio-status role="status" hidden></p><p data-live-error role="alert"></p></div>
+  <div class="emergency-stats" data-emergency-counts></div>
+  <section class="section emergency-workspace">
+    <header class="emergency-section-header"><div class="emergency-list-heading" data-emergency-attention><span class="emergency-signal" aria-hidden="true"></span><h2 data-list-title>Active reports</h2><span class="emergency-pending-count" data-alert-count>0</span></div><button class="emergency-history-toggle" data-history type="button">View history</button></header>
+    <div class="emergency-filter-bar" role="group" aria-label="Filter active reports"><button type="button" class="is-selected" data-emergency-filter="all" aria-pressed="true">All active</button><button type="button" data-emergency-filter="pending" aria-pressed="false">Needs response</button><button type="button" data-emergency-filter="responding" aria-pressed="false">Responding</button></div>
+    <div data-emergency-list></div>
+    <div class="emergency-pagination"><button class="button button-secondary" data-next-page type="button" hidden>Next page</button></div>
+  </section>
+  <noscript><p class="notice notice-error">Enable JavaScript to receive emergency alerts.</p></noscript>
+</div>
+<%- include('../partials/footer') %>

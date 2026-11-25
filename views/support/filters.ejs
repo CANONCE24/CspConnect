@@ -1,0 +1,6 @@
+<form class="filter-bar" method="get" action="<%= action %>">
+  <% if(!admin){ %><input type="hidden" name="view" value="conversations"><% } %>
+  <div class="field filter-search"><label for="support-search">Search conversations</label><input id="support-search" type="search" name="q" maxlength="150" value="<%= query.q || '' %>" placeholder="<%= admin?'Subject, ticket ID, or sender':'Subject or ticket ID' %>"></div>
+  <div class="field"><label for="support-status">Status</label><select id="support-status" name="status"><option value="">All statuses</option><% supportStatuses.forEach(value=>{ %><option value="<%= value %>"<%= query.status===value?' selected':'' %>><%= value %></option><% }); %></select></div>
+  <div class="filter-actions"><button class="button button-primary" type="submit">Apply filters</button><a class="text-link" href="<%= action %><%= admin?'':'?view=conversations' %>">Reset</a></div>
+</form>

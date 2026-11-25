@@ -1,0 +1,3 @@
+<%- include('partials/head',{publicPage:!user}) %>
+<div class="error-page"><div class="error-code">ERROR <%= status %></div><h1><%= status === 404 ? 'Page not found' : status === 403 ? 'Access unavailable' : 'Unable to complete your request' %></h1><p><%= message %></p><a class="button button-primary" href="<%= user ? (user.role === 'admin' ? '/admin' : '/dashboard') : '/login' %>"><%= user ? 'Return to dashboard' : 'Return to sign in' %></a></div>
+<%- include('partials/footer',{publicPage:!user}) %>

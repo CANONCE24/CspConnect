@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-20T23:55:32.114Z",
+  "result": "passed",
+  "databaseScope": "new owned temporary database, dropped after this run",
+  "steps": [
+    "registration and authenticated student dashboards",
+    "anonymous submission with real image, reference, and private ownership",
+    "administrator first-login password requirement",
+    "admin status, official response, publication, and owner tracking",
+    "persistent owner notifications, live menu badge, read actions, privacy and mobile layout",
+    "anonymous public display, reaction toggle/switch, and comments",
+    "comment moderation and restoration",
+    "category creation/availability and database-backed analytics",
+    "profile name, photo upload and removal using actual database storage",
+    "password change, logout, rejection of old password, and new-password login",
+    "forgotten-password request, emailed token, mobile reset form and recovered login",
+    "unpublication blocks public access and retains the private submission",
+    "populated student/admin mobile pages and no uncaught browser errors"
+  ]
+}

@@ -1,0 +1,54 @@
+<%- include('../partials/head') %>
+<a class="back-link" href="/admin/feedback">Back to Feedback Management</a>
+<header class="page-header"><div><span class="eyebrow"><%= feedback.reference %></span><h1><%= feedback.title %></h1><p>Review and update this submission.</p></div></header>
+<div class="detail-layout">
+  <div><%- include('../partials/detail-content') %></div>
+  <aside class="admin-tools">
+    <section class="section feedback-update">
+      <h2>Update Feedback</h2>
+      <% const draftStatus = statuses.includes(updateDraft.status) ? updateDraft.status : feedback.status; const method = ['web','email','both'].includes(updateDraft.notificationMethod) ? updateDraft.notificationMethod : 'both'; %>
+      <% if (updateError) { %><div class="notice notice-error" role="alert"><%= updateError %></div><% } %>
+      <form method="post" action="/admin/feedback/<%= feedback.id %>/status" data-feedback-update data-templates="<%= JSON.stringify(responseTemplates) %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="request_key" value="<%= actionKey %>">
+        <div class="field"><label for="status">Status</label><select id="status" name="status" required><% statuses.forEach(status => { %><option value="<%= status %>"<%= draftStatus === status ? ' selected' : '' %>><%= status %></option><% }); %></select></div>
+        <div class="field" data-action-fields<%= draftStatus === 'Resolved' ? '' : ' hidden' %>>
+          <label for="action-taken">Actual action taken</label><textarea id="action-taken" name="actionTaken" rows="3" minlength="10" maxlength="2000"<%= draftStatus === 'Resolved' ? ' required' : '' %>><%= updateDraft.actionTaken %></textarea>
+          <label class="response-confirm-check"><input type="checkbox" name="actionConfirmed" value="1"<%= draftStatus === 'Resolved' ? ' required' : '' %>>I confirm this describes work that was actually completed.</label>
+        </div>
+        <div class="field" data-closure-fields<%= draftStatus === 'Closed' ? '' : ' hidden' %>>
+          <label for="closure-reason">Reason for closing</label><textarea id="closure-reason" name="closureReason" rows="3" minlength="10" maxlength="2000"<%= draftStatus === 'Closed' ? ' required' : '' %>><%= updateDraft.closureReason %></textarea>
+          <p class="field-help">Explain the decision, including why the request cannot proceed when applicable.</p>
+        </div>
+        <div class="field"><label for="response-body">Response to Student</label><textarea id="response-body" name="response" rows="9" maxlength="5000" required aria-describedby="response-help"><%= updateDraft.response || responseTemplates[draftStatus].replace('{{actionTaken}}',()=>updateDraft.actionTaken || '{{actionTaken}}').replace('{{closureReason}}',()=>updateDraft.closureReason || '{{closureReason}}') %></textarea><p id="response-help" class="field-help">Review and edit the draft. Only include actions you can confirm.</p></div>
+        <button class="text-link response-restore" type="button" data-restore-response>Restore Default Response</button>
+        <fieldset class="notification-method"><legend>Notify Student Via</legend>
+          <% [['web','Web Only'],['email','Email Only'],['both','Both (Recommended)']].forEach(([value,label]) => { %><label><input type="radio" name="notificationMethod" value="<%= value %>"<%= method === value ? ' checked' : '' %> required><%= label %></label><% }); %>
+        </fieldset>
+        <p class="field-help">The status and full approved response are always saved in My Feedback. Email delivery is queued after confirmation.</p>
+        <noscript><p class="field-help">For Resolved or Closed, enter the actual details and replace the matching placeholder in the response.</p><label class="response-confirm-check"><input type="checkbox" name="confirmed" value="1" required>I approve this response and the selected notification method.</label></noscript>
+        <div class="feedback-update-actions"><a class="button button-secondary" href="/admin/feedback/<%= feedback.id %>">Cancel</a><button class="button button-primary" type="submit">Update &amp; Notify</button></div>
+        <dialog class="feedback-confirm-dialog" data-update-dialog aria-labelledby="update-review-heading">
+          <h2 id="update-review-heading">Confirm feedback update</h2><p>Review the final response before saving and notifying the student.</p>
+          <dl><div><dt>Status</dt><dd data-review-status></dd></div><div><dt>Notify via</dt><dd data-review-method></dd></div></dl>
+          <p class="multiline" data-review-details hidden></p>
+          <div class="feedback-review-response multiline" data-review-response></div>
+          <p class="field-help">This will save the official update and create only the selected notifications.</p>
+          <div class="feedback-update-actions"><button class="button button-secondary" type="button" data-review-cancel>Keep editing</button><button class="button button-primary" type="button" data-review-confirm>Confirm update</button></div>
+        </dialog>
+      </form>
+      <a class="text-link feedback-email-link" href="/admin/notifications">Email history</a>
+    </section>
+    <section class="section">
+      <h2>Community publication</h2>
+      <p class="publication-state"><%= feedback.is_published ? 'Published in the Community Feed.' : 'This feedback is private.' %></p>
+      <form method="post" action="/admin/feedback/<%= feedback.id %>/publish">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="published" value="<%= feedback.is_published ? '0' : '1' %>">
+        <button class="button button-full button-secondary" type="submit"><%= feedback.is_published ? 'Remove from Community Feed' : 'Publish to Community Feed' %></button>
+      </form>
+      <% if (feedback.is_published) { %><a class="text-link feedback-email-link" href="/community/<%= feedback.id %>">View community discussion</a><% } %>
+    </section>
+  </aside>
+</div>
+<script src="/js/feedback-update.js?v=<%= assetVersion %>" defer></script>
+<%- include('../partials/footer') %>

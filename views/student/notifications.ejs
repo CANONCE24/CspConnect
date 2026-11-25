@@ -1,0 +1,36 @@
+<%- include('../partials/head') %>
+<div class="page-header notifications-heading">
+  <div><h1>Notifications</h1><p>Updates about your submissions and private support conversations.</p></div>
+  <% if (result.latestId && unreadNotificationCount > 0) { %>
+    <form method="post" action="/notifications/read-all">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="throughId" value="<%= result.latestId %>">
+      <button class="button button-secondary button-small" type="submit">Mark all as read</button>
+    </form>
+  <% } %>
+</div>
+<section class="section notification-panel" aria-label="Account notifications">
+  <% if (result.items.length) { %>
+    <div class="notification-list">
+      <% result.items.forEach(item => { const labels = {StatusUpdated:'Submission update',AdminResponse:'Administrator response',Published:'Published to Community Feed',Unpublished:'Community Feed update',SupportNew:'New support ticket',SupportReply:'Support reply',SupportStatus:'Support ticket update'}; %>
+        <article class="notification-item<%= item.read_at ? '' : ' is-unread' %>">
+          <span class="notification-icon"><%- include('../partials/icon',{name:item.kind === 'AdminResponse' ? 'comment' : item.kind === 'StatusUpdated' ? 'clock' : 'bell'}) %></span>
+          <div class="notification-copy">
+            <div class="notification-meta"><strong><%= labels[item.kind] %></strong><% if (!item.read_at) { %><span class="notification-unread-label">Unread</span><% } %><time datetime="<%= new Date(item.created_at).toISOString() %>"><%= formatDate(item.created_at) %></time></div>
+            <h2><%= item.title %></h2>
+            <p><%= item.message %></p>
+            <span class="notification-reference"><%= item.reference %></span>
+            <form method="post" action="/notifications/<%= item.id %>/read">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="button button-secondary button-small" type="submit"><%= item.support_ticket_id ? 'View conversation' : 'View submission' %><%- include('../partials/icon',{name:'arrow'}) %></button>
+            </form>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class="empty-state"><span class="notification-empty-icon"><%- include('../partials/icon',{name:'bell'}) %></span><h3>You're all caught up.</h3><p>Updates about your submissions and private support conversations will appear here.</p><a class="text-link" href="<%= user.role==='admin'?'/admin/contact':'/contact?view=conversations' %>">View conversations</a></div>
+  <% } %>
+  <%- include('../partials/pagination') %>
+</section>
+<%- include('../partials/footer') %>

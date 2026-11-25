@@ -1,0 +1,11 @@
+<%- include('../partials/head',{publicPage:true,flash:null}) %>
+<div class="auth-layout connect-auth">
+  <%- include('../partials/auth-intro',{creating:false}) %>
+  <section class="connect-auth-form" aria-labelledby="support-help-heading"><div class="login-panel">
+    <h2 id="support-help-heading">Contact Administrator</h2><p>Need assistance accessing your account?</p>
+    <%- include('email',{compact:true}) %>
+    <nav class="auth-help-links"><a href="/login">Back to sign in</a></nav>
+  </div></section>
+</div>
+<script src="/js/support.js" defer></script>
+<%- include('../partials/footer',{publicPage:true}) %>

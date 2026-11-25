@@ -1,0 +1,32 @@
+<%- include('../partials/head') %>
+<header class="page-header"><div><span class="eyebrow">YOUR SPACE ON CSPCONNECT</span><h1>My account</h1><p>A familiar face. A voice that's yours. Keep your profile up to date.</p></div></header>
+<div class="profile-layout">
+  <aside class="profile-overview">
+    <div class="profile-cover"><span></span><span></span><span></span></div>
+    <div class="profile-identity">
+      <%- include('../partials/avatar', {person: user, size: 'avatar-large'}) %>
+      <h2><%= user.name %></h2><p class="profile-email"><%= user.email %></p>
+      <span class="profile-role"><%- include('../partials/icon',{name: user.role === 'admin' ? 'shield' : 'student'}) %><%= user.role === 'admin' ? 'Administrator' : user.role === 'security' ? 'Campus security' : (user.affiliation || 'Affiliation not set') %></span>
+    </div>
+    <dl class="profile-facts"><div><dt>Affiliation</dt><dd><%= user.affiliation || 'Not set' %></dd></div><div><dt>Community</dt><dd>Camarines Sur Polytechnic Colleges</dd></div><div><dt>Member since</dt><dd><%= user.created_at ? new Intl.DateTimeFormat('en-PH', {month:'long', year:'numeric', timeZone:'Asia/Manila'}).format(new Date(user.created_at)) : 'CSPConnect member' %></dd></div><div><dt>Sign-in method</dt><dd><%= user.google_id ? (user.has_password ? 'Google & email' : 'Google account') : 'Email & password' %></dd></div></dl>
+    <div class="profile-privacy"><%- include('../partials/icon',{name:'shield'}) %><p>Your name appears on your community comments. Anonymous feedback keeps its anonymous display.</p></div>
+  </aside>
+  <div class="profile-main">
+    <section class="section profile-settings" aria-labelledby="profile-heading">
+      <div class="profile-section-heading"><span class="profile-section-icon"><%- include('../partials/icon',{name:'student'}) %></span><div><h2 id="profile-heading">Personal information</h2><p>A few details to help your campus recognize you.</p></div></div>
+      <form method="post" action="/account/profile?_csrf=<%= encodeURIComponent(csrfToken) %>" enctype="multipart/form-data" data-profile-form>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="photo-editor">
+          <div class="photo-preview" data-photo-preview><%- include('../partials/avatar',{person:user,size:'avatar-large'}) %></div>
+          <div class="photo-editor-copy"><label class="field-label" for="profile-photo">Profile photo</label><p>Put a face to your ideas.</p><label class="button button-secondary button-small photo-picker" for="profile-photo"><%- include('../partials/icon',{name:'camera'}) %>Choose photo<input class="sr-only" id="profile-photo" name="attachment" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="photo-help photo-status"></label><span id="photo-status" class="photo-status" role="status"></span><p id="photo-help" class="field-help">JPG, PNG, or WebP. Up to 5 MB.</p>
+          <% if (/^\/avatars\//.test(user.avatar_url || '')) { %><label class="remove-photo-label"><input type="checkbox" name="removePhoto" value="1" data-remove-photo>Remove current photo</label><% } %></div>
+        </div>
+        <div class="field"><label for="profile-name">Full name</label><input id="profile-name" name="name" type="text" maxlength="200" autocomplete="name" required value="<%= values.name %>"><p class="field-help">This name appears on your community comments and non-anonymous posts.</p></div>
+        <div class="field"><label for="profile-email">Email address<span class="field-lock"><%- include('../partials/icon',{name:'lock'}) %>Linked to sign-in</span></label><input id="profile-email" type="email" value="<%= user.email %>" readonly aria-describedby="email-help"><p id="email-help" class="field-help">Your email stays connected to the account you use to sign in.</p></div>
+        <div class="profile-form-footer"><span>Changes apply across CSPConnect.</span><button class="button button-primary" type="submit">Save changes<%- include('../partials/icon',{name:'arrow'}) %></button></div>
+      </form>
+    </section>
+    <section class="section account-security"><span class="profile-section-icon"><%- include('../partials/icon',{name:'lock'}) %></span><div><h2>Password &amp; security</h2><p><%= user.has_password ? 'Keep your account secure with a strong, unique password.' : 'Add a password to also sign in with your email address.' %></p></div><a class="button button-secondary" href="/account/password"><%= user.has_password ? 'Change password' : 'Set a password' %><%- include('../partials/icon',{name:'arrow'}) %></a></section>
+  </div>
+</div>
+<%- include('../partials/footer') %>

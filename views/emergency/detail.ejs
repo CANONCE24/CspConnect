@@ -1,0 +1,13 @@
+<%- include('../partials/head') %>
+<header class="page-header emergency-page-header"><div><a class="emergency-back" href="<%= user.role === 'security' ? '/security' : '/emergency' %>">? <%= user.role === 'security' ? 'All reports' : 'Emergency Assistance' %></a><h1><%= report.type %> Emergency</h1><p class="emergency-reference">EM-<%= report.id %></p></div><span class="emergency-status is-<%= ['Submitted','Acknowledged'].includes(report.status) ? 'pending' : report.status.toLowerCase() %>" data-report-status><%= report.status %></span></header>
+<div class="emergency-layout emergency-detail-layout" data-emergency-app="detail" data-report-id="<%= report.id %>" data-security="<%= user.role === 'security' %>">
+<section class="section emergency-detail"><div class="emergency-issues"><p data-connection role="status" hidden></p><p data-live-error role="alert"></p></div><div data-report-body><h2><%= report.location %></h2><p class="emergency-description"><%= report.description %></p><div class="emergency-detail-facts"><p><span>Reported</span><%= formatDate(report.created_at) %></p><p><span>Contact number</span><%= report.contact_number || 'Not provided' %></p></div></div>
+<div data-status-controls>
+<% if (user.role === 'security' && report.status !== 'Resolved') { %><form method="post" action="/security/reports/<%= report.id %>/<%= ['Submitted','Acknowledged'].includes(report.status) ? 'respond' : 'status' %>"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="status" value="<%= emergencyStatuses[emergencyStatuses.indexOf(report.status)+1] %>"><button class="button emergency-button<%= report.status === 'Responding' ? ' is-resolve' : '' %>"><%= ['Submitted','Acknowledged'].includes(report.status) ? 'Respond to Emergency' : 'Mark Resolved' %></button></form><% } %>
+</div>
+<details class="emergency-audit"><summary>Status history</summary><ul data-report-history><% report.history.forEach(item => { %><li><strong><%= item.status %></strong><span><%= formatDate(item.created_at) %><% if (user.role === 'security' && item.actor_id) { %> ? Account #<%= item.actor_id %><% } %></span></li><% }); %></ul></details>
+</section>
+<% if (user.role !== 'security') { %><aside><%- include('call') %></aside><% } %>
+</div>
+<% if (user.role !== 'security') { %><script src="/socket.io/socket.io.js" defer></script><script src="/js/emergency.js" defer></script><% } %>
+<%- include('../partials/footer') %>

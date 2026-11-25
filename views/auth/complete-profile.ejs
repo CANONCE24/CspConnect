@@ -1,0 +1,25 @@
+<%- include('../partials/head',{publicPage:true,flash:null}) %>
+<div class="auth-layout connect-auth">
+  <%- include('../partials/auth-intro',{creating:false}) %>
+  <section class="connect-auth-form" aria-labelledby="affiliation-heading">
+    <div class="login-panel verification-panel">
+      <h2 id="affiliation-heading">Complete Your Profile</h2>
+      <p>Your CSPC email is verified. Choose your affiliation to continue.</p>
+      <% if(message) { %><div class="notice notice-error" role="alert"><%= message %></div><% } %>
+      <form class="password-form" method="post" action="/complete-profile">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="field">
+          <label for="affiliation">What is your affiliation with CSPC?</label>
+          <select id="affiliation" name="affiliation" required aria-describedby="affiliation-help">
+            <option value="" disabled selected>Select your affiliation</option>
+            <% affiliations.forEach(value => { %><option value="<%= value %>"><%= value %></option><% }); %>
+          </select>
+          <p id="affiliation-help" class="field-help">Your affiliation is saved to your profile. Your selection does not change your account permissions.</p>
+        </div>
+        <button class="button button-primary button-full signin-button" type="submit">Continue to CSPConnect</button>
+      </form>
+      <form class="verification-resend" method="post" action="/logout"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="button button-secondary button-full" type="submit">Sign out</button></form>
+    </div>
+  </section>
+</div>
+<%- include('../partials/footer',{publicPage:true}) %>

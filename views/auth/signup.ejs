@@ -1,0 +1,21 @@
+<%- include('../partials/head',{publicPage:true,flash:null}) %>
+<div class="auth-layout connect-auth connect-auth-signup">
+  <%- include('../partials/auth-intro',{creating:true}) %>
+  <section class="connect-auth-form">
+    <div class="login-panel">
+      <h2>Create an account</h2>
+      <p>Create your account, then enter the 6-digit email code to activate it. Google sign-in does not require a code.</p>
+      <% if (flash && flash.message) { %><div class="notice notice-<%= flash.type === 'error' ? 'error' : 'success' %>" role="<%= flash.type === 'error' ? 'alert' : 'status' %>"><%= flash.message %></div><% } %>
+      <form class="password-form" method="post" action="/auth/signup">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="field"><label for="signup-name">Full name</label><input id="signup-name" name="name" type="text" maxlength="200" autocomplete="name" value="<%= values.name || '' %>" required></div>
+        <div class="field"><label for="signup-email">Email address</label><input id="signup-email" name="email" type="email" maxlength="254" autocomplete="email" value="<%= values.email || '' %>" required><p class="field-help">CSPC email and Gmail addresses are accepted.</p></div>
+        <div class="field"><label for="signup-password">Password</label><div class="password-input"><input id="signup-password" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" placeholder="At least 12 characters" required><button type="button" data-toggle-password="signup-password" aria-label="Show password" aria-pressed="false"><%- include('../partials/icon',{name:'eye'}) %></button></div></div>
+        <div class="field"><label for="signup-confirmation">Confirm password</label><input id="signup-confirmation" name="passwordConfirmation" type="password" minlength="12" maxlength="72" autocomplete="new-password" required></div>
+        <button class="button button-primary button-full signin-button" type="submit">Create account</button>
+      </form>
+      <p class="account-switch">Already have an account? <a href="/login">Sign in</a></p>
+    </div>
+  </section>
+</div>
+<%- include('../partials/footer',{publicPage:true}) %>

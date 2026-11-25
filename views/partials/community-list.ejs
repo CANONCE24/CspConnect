@@ -1,0 +1,10 @@
+<% if (posts.length) { %>
+<div class="community-list"><% posts.forEach(post => { const author = post.is_anonymous ? 'Anonymous' : (post.author_name || 'Student'); %>
+  <article class="feed-entry feed-entry--<%= post.type.toLowerCase().replace(/[^a-z0-9]+/g, '-') %>">
+    <div class="entry-meta"><span class="type-label type-label--<%= post.type.toLowerCase().replace(/[^a-z0-9]+/g, '-') %>"><%= post.type %></span><span class="entry-category"><%= post.category_name || 'Uncategorized' %></span><span class="entry-date"><%= formatDate(post.published_at) %></span></div>
+    <div class="entry-heading"><h3><a href="/community/<%= post.id %>"><%= post.title %></a></h3><%- include('status',{status:post.status}) %></div>
+    <p class="feed-excerpt"><%= String(post.description || '').slice(0,280) %><%= String(post.description || '').length > 280 ? '\u2026' : '' %></p>
+    <div class="feed-bottom"><div class="feed-author"><span class="feed-avatar" aria-hidden="true"><% if (post.is_anonymous) { %><%- include('icon',{name:'student'}) %><% } else { %><%= author.charAt(0).toUpperCase() %><% } %></span><div><span class="feed-author-name"><%= author %></span><span class="feed-author-caption">CSPC community</span></div></div><%- include('reactions',{post,selected:post.current_reaction || null}) %></div>
+  </article>
+<% }); %></div>
+<% } else { const filtered = query.q || query.type || query.status || query.category || query.visibility; %><div class="empty-state community-empty"><span class="community-empty-icon"><%- include('icon',{name:filtered ? 'search' : 'comment'}) %></span><h3><%= filtered ? 'No feedback matches your filters.' : 'The conversation starts here.' %></h3><p><%= filtered ? 'Try a different search or reset your filters to explore more feedback.' : 'Administrator-approved feedback will appear here. Your next idea could make a difference.' %></p></div><% } %>

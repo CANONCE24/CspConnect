@@ -1,0 +1,17 @@
+<div class="community-reactions" data-reactions="<%= post.id %>" role="group" aria-label="Reactions for <%= post.title %>">
+  <div class="reaction-controls">
+    <% [['support', 'Support', post.support_count], ['not_helpful', 'Not Helpful', post.not_helpful_count]].forEach(([kind, label, count]) => { %>
+      <% if (user.role === 'student') { %>
+        <form method="post" action="/community/<%= post.id %>/reaction" data-reaction-form>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="kind" value="<%= kind %>">
+          <button class="reaction-button" type="submit" data-reaction="<%= kind %>" aria-pressed="<%= selected === kind ? 'true' : 'false' %>"><%- include('icon',{name:kind}) %><span><%= label %></span><strong data-reaction-count="<%= kind %>"><%= Number(count || 0) %></strong></button>
+        </form>
+      <% } else { %>
+        <span class="reaction-button reaction-total"><%- include('icon',{name:kind}) %><span><%= label %></span><strong data-reaction-count="<%= kind %>"><%= Number(count || 0) %></strong></span>
+      <% } %>
+    <% }); %>
+    <a class="reaction-button comments-button" href="/community/<%= post.id %>#discussion"><%- include('icon',{name:'comment'}) %><span>Comments</span><strong><%= Number(post.comment_count || 0) %></strong></a>
+  </div>
+  <p class="reaction-message" role="status" aria-live="polite" hidden></p>
+</div>

@@ -1,0 +1,4 @@
+<%- include('../partials/head') %>
+<header class="page-header"><div><span class="eyebrow">ADMINISTRATION</span><h1>Feedback Management</h1><p>Review submissions, update their status, and manage community publication.</p></div></header>
+<section class="section flush"><%- include('../partials/filters',{action:'/admin/feedback',showStatus:true,showCategory:true,showVisibility:true,showAffiliation:true}) %><%- include('../partials/feedback-table',{rows:result.items,basePath:'/admin/feedback',emptyTitle:query.q || query.type || query.status || query.category || query.visibility || query.affiliation ? 'No feedback matches your filters.' : 'No feedback yet.',emptyMessage:'User submissions will appear here for review.'}) %><%- include('../partials/pagination') %></section>
+<%- include('../partials/footer') %>

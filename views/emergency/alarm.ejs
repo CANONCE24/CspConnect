@@ -1,0 +1,7 @@
+<div data-security-alarm data-user-id="<%= user.id %>">
+  <dialog class="emergency-alarm-dialog" aria-labelledby="emergency-alarm-title" data-emergency-dialog>
+    <div class="emergency-alarm-heading"><span class="emergency-alarm-icon"><%- include('../partials/icon',{name:'shield'}) %></span><div><span class="eyebrow">NEEDS RESPONSE</span><h2 id="emergency-alarm-title">Emergency reported <span data-alarm-count>0</span></h2></div></div>
+    <div data-alarm-reports aria-live="polite" aria-relevant="additions"></div>
+    <div class="emergency-issues"><p data-connection role="status" hidden></p><p data-audio-status role="status" hidden></p><p data-live-error role="alert"></p></div>
+  </dialog>
+</div>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="<%= csrfToken %>">
+  <title><%= title || 'Your campus, connected' %> | CSPConnect</title>
+  <link rel="stylesheet" href="/css/app.css?v=<%= typeof assetVersion !== 'undefined' ? assetVersion : '1' %>">
+  <% if (active === 'emergency' || user?.role === 'security') { %><link rel="stylesheet" href="/css/emergency.css?v=<%= assetVersion %>"><% } %>
+  <script src="/js/app.js?v=<%= typeof assetVersion !== 'undefined' ? assetVersion : '1' %>" defer></script>
+  <% if (['student','admin'].includes(user?.role)) { %><script src="/js/notifications.js?v=<%= assetVersion %>" defer></script><% } %>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<% if (user && !(typeof publicPage !== 'undefined' && publicPage)) { %>
+<div class="app-shell">
+  <%- include('sidebar') %>
+  <div class="main-column">
+    <header class="topbar">
+      <div class="topbar-left"><button class="menu-toggle button button-small button-secondary" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button><span class="workspace-label">Your campus, connected.<span class="workspace-dot"></span>CSPConnect</span></div>
+      <details class="account-menu" data-account-menu>
+        <summary class="account" aria-label="My account"><span class="account-avatar"><%- include('avatar',{person:user}) %><% if (['student','admin'].includes(user.role)) { %><span class="account-notification-dot" data-notification-dot aria-hidden="true"<%= unreadNotificationCount ? '' : ' hidden' %>></span><% } %></span><span class="account-summary"><strong><%= user.name %></strong><span><%= user.role === 'admin' ? 'Administrator' : user.role === 'security' ? 'Campus security' : (user.affiliation || 'Affiliation not set') %></span></span><%- include('icon',{name:'chevron'}) %></summary>
+        <div class="account-dropdown">
+          <div class="account-dropdown-info"><strong><%= user.name %></strong><span><%= user.email %></span><span class="account-dropdown-role"><%= user.role === 'admin' ? 'Administrator' : user.role === 'security' ? 'Campus security' : (user.affiliation || 'Affiliation not set') %></span></div>
+          <a href="/account"><%- include('icon',{name:'student'}) %>My account<%- include('icon',{name:'arrow'}) %></a>
+          <% if (['student','admin'].includes(user.role)) { %><a href="/notifications" data-notification-link><%- include('icon',{name:'bell'}) %>Notifications<span class="notification-count" data-notification-count aria-label="<%= unreadNotificationCount %> unread notifications"<%= unreadNotificationCount ? '' : ' hidden' %>><%= unreadNotificationCount > 99 ? '99+' : unreadNotificationCount %></span></a><% } %>
+          <a href="/account/password"><%- include('icon',{name:'lock'}) %>Password &amp; security</a>
+          <form method="post" action="/logout"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit"><%- include('icon',{name:'logout'}) %>Sign out</button></form>
+        </div>
+      </details>
+    </header>
+    <main id="main-content" class="content" tabindex="-1">
+<% } else { %>
+<main id="main-content" class="public-content" tabindex="-1">
+<% } %>
+<% if (flash && flash.message) { %>
+  <% if (flash.type === 'success' && flash.reference) { %>
+    <section class="notice notice-success notice--submission" role="status" aria-live="polite" aria-atomic="true" aria-labelledby="submission-notice-title" aria-describedby="submission-notice-description submission-reference" tabindex="-1" data-submission-notice>
+      <div class="submission-notice-copy">
+        <h2 id="submission-notice-title"><%= flash.title || 'Feedback submitted successfully' %></h2>
+        <p id="submission-notice-description"><%= flash.description %></p>
+      </div>
+      <div class="submission-notice-reference" id="submission-reference">
+        <span>Reference number</span>
+        <strong><%= flash.reference %></strong>
+      </div>
+    </section>
+  <% } else { %>
+    <div class="notice notice-<%= flash.type === 'error' ? 'error' : 'success' %>" role="<%= flash.type === 'error' ? 'alert' : 'status' %>"><%= flash.message %></div>
+  <% } %>
+<% } %>

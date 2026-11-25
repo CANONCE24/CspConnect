@@ -1,0 +1,3 @@
+<% const photo = /^\/avatars\/[a-f0-9-]+\.webp$/.test(person.avatar_url || '') ? person.avatar_url : null;
+const initials = (person.name || 'C').trim().split(/\s+/).slice(0, 2).map(part => part.charAt(0)).join('').toUpperCase(); %>
+<span class="profile-avatar <%= typeof size !== 'undefined' ? size : '' %>"><% if (photo) { %><img src="<%= photo %>" alt="" width="96" height="96"><% } else { %><span aria-hidden="true"><%= initials %></span><% } %></span>

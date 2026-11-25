@@ -1,0 +1,7 @@
+<details class="comment-edit"><summary>Edit comment</summary>
+  <form method="post" action="/community/<%= feedback.id %>/comments/<%= comment.id %>/edit">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="version" value="<%= comment.version || 1 %>"><input type="hidden" name="request_key" value="<%= newActionKey() %>">
+    <label class="sr-only" for="edit-comment-<%= comment.id %>">Edit your comment</label><textarea id="edit-comment-<%= comment.id %>" name="body" rows="3" maxlength="500" required><%= comment.body %></textarea>
+    <p class="field-help">Edits are screened again before publication. Comments already awaiting review remain pending until an administrator decides.</p><button class="button button-secondary button-small" type="submit">Save comment</button>
+  </form>
+</details>

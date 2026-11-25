@@ -1,0 +1,16 @@
+<%- include('../partials/head') %>
+<header class="page-header emergency-page-header"><div><span class="eyebrow">STUDENT PORTAL</span><h1>Emergency Assistance</h1><p>Contact campus security or report an emergency.</p></div></header>
+<p class="notice" data-emergency-availability role="status">Monitoring status is unavailable. Use verified official contacts for urgent help.</p>
+<div class="emergency-layout"><aside><%- include('call') %></aside>
+<section class="section emergency-form"><header class="emergency-form-heading"><h2>Report an emergency</h2><p>Tell security what happened and where.</p></header>
+<% if (errors.length) { %><div class="notice notice-error" role="alert"><% errors.forEach(error => { %><p><%= error %></p><% }); %></div><% } %>
+<form method="post" action="/emergency/reports" data-emergency-form><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="request_key" value="<%= values.request_key %>">
+<div class="field-grid"><div class="field"><label for="type">Emergency type</label><select name="type" id="type" required><option value="">Select type</option><% emergencyTypes.forEach(type => { %><option<%= values.type === type ? ' selected' : '' %>><%= type %></option><% }); %></select></div>
+<div class="field"><label for="location">Location</label><input name="location" id="location" required minlength="2" maxlength="200" value="<%= values.location || '' %>" placeholder="Building, room, or area"></div></div>
+<div class="field"><label for="description">What happened?</label><textarea name="description" id="description" required minlength="5" maxlength="2000" rows="4" placeholder="Briefly describe the emergency."><%= values.description || '' %></textarea></div>
+<div class="field"><label for="contact_number">Contact number <span class="muted">(optional)</span></label><input type="tel" name="contact_number" id="contact_number" maxlength="25" autocomplete="tel" value="<%= values.contact_number || '' %>" placeholder="A number security can reach"></div>
+<div class="emergency-form-footer"><span>For immediate help, call the guardhouse.</span><button class="button emergency-button" type="submit">Submit Emergency Report</button></div><p data-form-connection role="status"></p>
+</form></section></div>
+<section class="section emergency-workspace" id="my-emergencies" data-emergency-app="student"><header class="emergency-section-header"><h2 data-list-title>My reports</h2><button class="emergency-history-toggle" data-history type="button">View history</button></header><div class="emergency-issues"><p data-connection role="status" hidden></p><p data-live-error role="alert"></p></div><div data-emergency-list></div><div class="emergency-pagination"><button class="button button-secondary" data-next-page type="button" hidden>Next page</button></div></section>
+<script src="/socket.io/socket.io.js" defer></script><script src="/js/emergency.js" defer></script>
+<%- include('../partials/footer') %>

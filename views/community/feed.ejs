@@ -1,0 +1,43 @@
+<%- include('../partials/head') %>
+<div class="community-page">
+  <header class="community-hero">
+    <div class="community-hero-copy">
+      <span class="community-kicker"><span></span> YOUR CAMPUS. YOUR VOICE.</span>
+      <h1>Community Feed<span class="hero-period">.</span></h1>
+      <p>Good ideas start with a conversation.<br>Share your support. Help shape a better CSPC.</p>
+      <% if (user.role === 'student') { %><a class="button community-create" href="/feedback/new"><%- include('../partials/icon',{name:'plus'}) %> Submit Feedback <%- include('../partials/icon',{name:'arrow'}) %></a><% } %>
+    </div>
+    <div class="community-hero-art" aria-hidden="true">
+      <div class="hero-orbit hero-orbit-one"></div><div class="hero-orbit hero-orbit-two"></div>
+      <div class="hero-bubble"><span class="hero-bubble-symbol"><%- include('../partials/icon',{name:'comment'}) %></span><span class="hero-drawing-line"></span><span class="hero-drawing-line short"></span><span class="hero-bubble-dots"><i></i><i></i><i></i></span></div>
+      <div class="hero-support-stamp"><%- include('../partials/icon',{name:'support'}) %></div>
+      <span class="hero-spark"><%- include('../partials/icon',{name:'sparkles'}) %></span>
+      <span class="hero-art-caption">A little feedback. A lasting impact.</span>
+    </div>
+  </header>
+  <div class="community-layout">
+    <div class="community-stream">
+      <div class="feed-filters community-search-panel"><%- include('../partials/filters',{action:'/community',showStatus:false,showCategory:true}) %></div>
+      <div class="community-stream-heading"><h2>Campus conversations</h2><span class="community-result-count"><%= result.total %> <%= result.total === 1 ? 'result' : 'results' %></span></div>
+      <nav class="feed-sorting" aria-label="Sort community feedback"><% [['trending','Trending','trending'],['most_supported','Most Supported','support'],['newest','Newest','clock']].forEach(([value,label,icon]) => { const params = new URLSearchParams(query); params.set('sort', value); params.delete('page'); %><a class="feed-sort<%= query.sort === value ? ' is-selected' : '' %>" href="?<%= params.toString() %>"<% if (query.sort === value) { %> aria-current="true"<% } %>><%- include('../partials/icon',{name:icon}) %><span><%= label %></span></a><% }); %></nav>
+      <p class="feed-sort-description"><%= query.sort === 'trending' ? 'Ideas gaining support this week.' : query.sort === 'most_supported' ? 'The ideas your community is getting behind.' : 'The latest voices from across campus.' %></p>
+      <section class="community-main" aria-label="Community feedback"><%- include('../partials/community-list',{posts:result.items}) %><% if (user.role === 'admin') { %><div class="moderation-action"><a class="text-link" href="/admin/feedback">Manage feedback publication</a><a class="text-link" href="/admin/comments">Moderate comments</a></div><% } %></section>
+      <%- include('../partials/pagination') %>
+    </div>
+    <aside class="community-rail" aria-label="About this community">
+      <section class="community-about">
+        <span class="community-rail-icon"><%- include('../partials/icon',{name:'student'}) %></span><span class="rail-eyebrow">BETTER, TOGETHER</span>
+        <h2>A space for<br>positive change.</h2><p>Your experiences matter. Discover what other students are saying and add your voice to the conversation.</p>
+        <div class="community-trust"><%- include('../partials/icon',{name:'shield'}) %><div><strong>Reviewed before it is shared</strong><span>Only administrator-approved feedback appears here.</span></div></div>
+      </section>
+      <section class="community-guide">
+        <h2>Make your voice count</h2>
+        <div class="community-guide-item"><span class="guide-icon guide-icon-support"><%- include('../partials/icon',{name:'support'}) %></span><div><h3>See an idea you like?</h3><p>Support it to show you agree.</p></div></div>
+        <div class="community-guide-item"><span class="guide-icon guide-icon-comment"><%- include('../partials/icon',{name:'comment'}) %></span><div><h3>Have something to add?</h3><p>Keep the discussion constructive and respectful.</p></div></div>
+        <div class="community-guide-item"><span class="guide-icon guide-icon-trending"><%- include('../partials/icon',{name:'trending'}) %></span><div><h3>Explore trending ideas</h3><p>Find feedback gaining Support in the last 7 days.</p></div></div>
+      </section>
+      <p class="community-rail-footer">Different perspectives. One community.</p>
+    </aside>
+  </div>
+</div>
+<%- include('../partials/footer') %>
